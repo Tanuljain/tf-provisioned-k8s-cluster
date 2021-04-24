@@ -1,0 +1,67 @@
+# ---
+# - hosts: tag_Name_slave1, tag_Name_slave2
+#   tasks:
+#     - name: run date command
+#       command: date
+#       register: data
+
+#     - name: run copy command
+#       become: false
+#       local_action:
+#         module: copy
+#         content: "{{ data }}"
+#         dest: ./test.txt
+
+# - hosts: tag_Name_master
+#   tasks:
+#   - name: register config file in variable
+#     command: cat /root/.kube/config
+#     register: config_file
+
+#   - name: print config_file
+#     debug:
+#       msg: "{{ config_file }}"
+
+#   - name: gather ec2_facts
+#     ec2_metadata_facts:
+#     tags: run
+
+#   - name: print public_ip of master
+#     debug:
+#       msg: "{{ ansible_ec2_public_ipv4 }}"
+#     tags: run
+
+#   - name: register config file in variable
+#     command: cat /root/.kube/config
+#     register: config_file
+
+#   - name: copy .kube/config file to local file
+#     become_user: arix
+#     local_action: copy content="{{ config_file.stdout }}" dest="./config"
+#     tags: run
+
+# - hosts: localhost
+#   tasks:
+#   - name: print date
+#     command: date
+
+---
+- hosts: localhost
+  vars:
+    - msg: "Hello World!"
+    - list: (["abc", "def"])
+    - tf_dir: "tftest/"
+  tasks:
+    - name: test tf from Ansible.
+      terraform:
+        project_path: "{{ tf_dir }}"
+        force_init: yes
+        state: present
+        variables:
+          msg: "{{ msg }}"
+          list: "{{ list }}"
+      register: state
+
+    - name: Print state of AWS Resource.
+      debug:
+        msg: "{{ state }}"

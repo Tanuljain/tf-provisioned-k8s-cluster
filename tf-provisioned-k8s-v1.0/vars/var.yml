@@ -1,0 +1,15 @@
+---
+# Variables for AWS Instance
+
+# bucket_name: "tfstate-ap-south-1"
+# dynamodb_table: "tf-locks"
+# tf_state_dir: "tfstate"
+sg_id: "sg-03a168289cd95fbc0"
+ami_id: "ami-0d758c1134823146a"
+region: "ap-south-1"
+key_name: "key"
+tf_aws_infra_dir: "../aws_infra/tf_aws_infra/"
+tf_k8s_infra_dir: "../k8s_infra/tf_k8s_infra"
+instance_name: '["master", "slave1", "slave2"]'
+instance_type: "t2.medium"
+availability_zone: "ap-south-1a"

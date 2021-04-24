@@ -1,0 +1,23 @@
+---
+- hosts: localhost
+  vars_files:
+    - ../vars/var.yml
+  tasks:
+  - name: Deploy tf config on AWS from Ansible.
+    terraform:
+      project_path: "{{ tf_aws_infra_dir }}"
+      force_init: yes
+      state: present
+      variables:
+        ami_id: "{{ ami_id }}"
+        instance_name: '({{ instance_name }})' # list type
+        key_name: "{{ key_name }}"
+        instance_type: "{{ instance_type }}"
+        sg_id: "{{ sg_id }}"
+        region: "{{ region }}"
+        availability_zone: "{{ availability_zone }}"
+    register: state
+
+  - name: Print state of AWS Resource.
+    debug:
+      msg: "{{ state }}"

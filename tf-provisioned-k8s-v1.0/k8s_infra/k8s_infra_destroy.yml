@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  vars_files:
+    - vars/var.yml
+  tasks:
+    - name: Destroy Environment
+      terraform:
+        project_path: "{{ tf_k8s_infra_dir }}"
+        state: absent
+      register: state
+
+    - name: Print state of resources.
+      debug:
+        msg: "{{ state }}"

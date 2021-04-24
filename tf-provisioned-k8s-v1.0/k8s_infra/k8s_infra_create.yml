@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  vars_files:
+    - ../vars/var.yml
+  tasks:
+  - name: Deploy tf config on k8s from Ansible.
+    terraform:
+      project_path: "{{ tf_k8s_infra_dir }}"
+      force_init: yes
+      state: present
+    register: state
+
+  - name: Print state of AWS Resource.
+    debug:
+      msg: "{{ state }}"
